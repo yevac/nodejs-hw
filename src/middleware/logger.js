@@ -1,6 +1,6 @@
-import mongoose from "mongoose";
+import pinoHttp from 'pino-http';
 
-const noteSchema = new mongoose.Schema(
+export const logger = pinoHttp(
   {
     title: {
       type: String,
@@ -31,5 +31,3 @@ const noteSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
-
-export const Note = mongoose.model("Note", noteSchema);
