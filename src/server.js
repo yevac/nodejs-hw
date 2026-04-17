@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import { errors } from 'celebrate';
 
 import { logger } from './middleware/logger.js';
 import { notFoundHandler } from './middleware/notFoundHandler.js';
@@ -19,9 +20,7 @@ app.use(logger);
 
 app.use(notesRouter);
 
-app.get('/test-error', () => {
-  throw new Error('Test error');
-});
+app.use(errors());
 
 app.use(notFoundHandler);
 app.use(errorHandler);

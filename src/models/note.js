@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { TAGS } from "../constants/tags";
 
 const noteSchema = new mongoose.Schema(
   {
@@ -9,27 +10,20 @@ const noteSchema = new mongoose.Schema(
     },
     content: {
       type: String,
+      required: false,
       default: "",
       trim: true,
     },
     tag: {
       type: String,
-      enum: [
-        "Work",
-        "Personal",
-        "Meeting",
-        "Shopping",
-        "Ideas",
-        "Travel",
-        "Finance",
-        "Health",
-        "Important",
-        "Todo",
-      ],
+      enum: TAGS,
       default: "Todo",
     },
   },
   { timestamps: true }
 );
+
+// ❗ текстовий індекс
+noteSchema.index({ title: "text", content: "text" });
 
 export const Note = mongoose.model("Note", noteSchema);
