@@ -17,7 +17,7 @@ app.use(cors());
 app.use(express.json());
 app.use(logger);
 
-app.use('/notes', notesRouter);
+app.use(notesRouter);
 
 app.get('/test-error', () => {
   throw new Error('Test error');
