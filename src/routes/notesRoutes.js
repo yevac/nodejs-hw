@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { celebrate, Joi, Segments } from "celebrate";
+import { celebrate } from "celebrate";
 
 import {
   getAllNotes,
@@ -9,66 +9,29 @@ import {
   updateNote,
 } from "../controllers/notesController.js";
 
+// ❗ ВАЖЛИВО: ці схеми вже мають бути в проєкті
+import {
+  getAllNotesSchema,
+  noteIdSchema,
+  createNoteSchema,
+  updateNoteSchema,
+} from "../schemas/notesSchemas.js";
+
 const router = Router();
 
-router.get(
-  "/",
-  celebrate({
-    [Segments.QUERY]: Joi.object({
-      page: Joi.number().min(1),
-      perPage: Joi.number().min(1).max(100),
-      tag: Joi.string(),
-      search: Joi.string(),
-    }),
-  }),
-  getAllNotes
-);
+// GET /notes
+router.get("/", celebrate(getAllNotesSchema), getAllNotes);
 
-router.get(
-  "/:noteId",
-  celebrate({
-    [Segments.PARAMS]: Joi.object({
-      noteId: Joi.string().hex().length(24).required(),
-    }),
-  }),
-  getNoteById
-);
+// GET /notes/:noteId
+router.get("/:noteId", celebrate(noteIdSchema), getNoteById);
 
-router.post(
-  "/",
-  celebrate({
-    [Segments.BODY]: Joi.object({
-      title: Joi.string().required(),
-      content: Joi.string().allow(""),
-      tag: Joi.string(),
-    }),
-  }),
-  createNote
-);
+// POST /notes
+router.post("/", celebrate(createNoteSchema), createNote);
 
-router.delete(
-  "/:noteId",
-  celebrate({
-    [Segments.PARAMS]: Joi.object({
-      noteId: Joi.string().hex().length(24).required(),
-    }),
-  }),
-  deleteNote
-);
+// DELETE /notes/:noteId
+router.delete("/:noteId", celebrate(noteIdSchema), deleteNote);
 
-router.patch(
-  "/:noteId",
-  celebrate({
-    [Segments.PARAMS]: Joi.object({
-      noteId: Joi.string().hex().length(24).required(),
-    }),
-    [Segments.BODY]: Joi.object({
-      title: Joi.string(),
-      content: Joi.string().allow(""),
-      tag: Joi.string(),
-    }),
-  }),
-  updateNote
-);
+// PATCH /notes/:noteId
+router.patch("/:noteId", celebrate(updateNoteSchema), updateNote);
 
 export default router;
