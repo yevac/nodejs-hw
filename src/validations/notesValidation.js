@@ -41,5 +41,5 @@ export const updateNoteSchema = celebrate({
     title: Joi.string().min(1),
     content: Joi.string().allow(''),
     tag: Joi.string().valid(...TAGS)
-  }).min(1) // 🔥 важно: хотя бы одно поле
+  }).min(1)
 });
