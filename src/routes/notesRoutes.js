@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import { authenticate } from "../middleware/authenticate.js";
 import {
   getAllNotes,
   getNoteById,
@@ -7,8 +8,11 @@ import {
   updateNote,
 } from '../controllers/notesController.js';
 
+
 const router = Router();
 
+
+router.use(authenticate);
 router.get('/notes', getAllNotes);
 router.get('/notes/:noteId', getNoteById);
 router.post('/notes', createNote);
