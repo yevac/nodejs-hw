@@ -7,14 +7,14 @@ import {
   refreshUserSession,
   logoutUser,
   requestResetEmail,
-  resetPasswordSchema,
+  resetPassword,
 } from "../controllers/authController.js";
 
 import {
   registerUserSchema,
   loginUserSchema,
   requestResetEmailSchema,
-  resetPassword,
+  resetPasswordSchema,
 } from "../validations/authValidation.js";
 
 
