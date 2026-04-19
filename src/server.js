@@ -11,6 +11,7 @@ import { connectMongoDB } from "./db/connectMongoDB.js";
 
 import notesRouter from "./routes/notesRoutes.js";
 import authRouter from "./routes/authRoutes.js";
+import userRouter from "./routes/userRoutes.js";
 
 dotenv.config();
 
@@ -24,6 +25,7 @@ app.use(logger);
 
 app.use(authRouter);
 app.use(notesRouter);
+app.use(userRouter);
 
 app.use(errors());
 
